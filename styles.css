@@ -507,6 +507,18 @@ section { padding: 100px 0; position: relative; }
 .benefit-text p {
   font-size: 12px; color: var(--text-muted);
 }
+.benefit-middle-text {
+  max-width: 500px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--text-primary);
+  font-style: italic;
+}
+.benefit-middle-text.highlight-glow {
+  color: var(--accent);
+  text-shadow: 0 0 20px var(--accent-glow-strong), 0 0 40px var(--accent-glow);
+}
 .footer {
   background: var(--bg-primary);
   border-top: 1px solid var(--border);
