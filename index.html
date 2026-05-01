@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Living Result — Premium fitness supplements. We don't just sell supplements, we LIVE the results. Shop Whey Protein, Mass Gainer, Creatine and more.">
+  <title>Living Result | #WEARETHELIVINGRESULT</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#" class="nav-logo">
+        <!-- Replace logo.png with your own logo file -->
+        <img src="images/logo.png" alt="Living Result" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="logo-fallback" style="display:none;"><div class="logo-icon">LR</div><span class="logo-text">Living Result</span></div>
+      </a>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="#products">Shop</a></li>
+        <li><a href="#products">Categories</a></li>
+        <li><a href="#why-choose">About</a></li>
+        <li><a href="#footer">Contact</a></li>
+      </ul>
+      <div class="nav-icons">
+        <button aria-label="Search" id="searchBtn" onclick="toggleSearch()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+
+
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE OVERLAY -->
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <!-- SEARCH OVERLAY -->
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-overlay-content">
+      <button class="search-close" onclick="toggleSearch()">&times;</button>
+      <h3>Search Products</h3>
+      <div class="search-input-wrap">
+        <input type="text" id="searchInput" placeholder="Search for supplements..." autocomplete="off" oninput="handleSearch(this.value)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <!-- CART SIDEBAR -->
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-sidebar-header">
+      <h3>Your Cart</h3>
+      <button class="cart-close" onclick="toggleCart()">&times;</button>
+    </div>
+    <div class="cart-sidebar-body" id="cartBody">
+      <div class="cart-empty">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <p>Your cart is empty</p>
+        <a href="#products" class="btn-primary" onclick="toggleCart()" style="font-size:12px;padding:10px 24px;">Browse Products</a>
+      </div>
+    </div>
+  </div>
+  <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <!-- Full-bleed background image -->
+    <div class="hero-bg">
+      <img src="images/hero-athlete.png" alt="Muscular athlete in dramatic lighting" loading="eager">
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-tagline">
+          #WEARETHE<br><span class="highlight">LIVINGRESULT</span>
+        </h1>
+        <p class="hero-subtext">
+          We don't just sell supplements.<br>We <strong>LIVE</strong> the results.
+        </p>
+        <div class="hero-features">
+          <div class="hero-feature">
+            <div class="hero-feature-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+              <h4>Premium Quality</h4>
+              <p>Only the best ingredients.</p>
+            </div>
+          </div>
+          <div class="hero-feature">
+            <div class="hero-feature-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div>
+              <h4>Affordable Price</h4>
+              <p>High quality, honest prices.</p>
+            </div>
+          </div>
+          <div class="hero-feature">
+            <div class="hero-feature-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <h4>Real Results</h4>
+              <p>Backed by real athletes.</p>
+            </div>
+          </div>
+        </div>
+        <a href="#products" class="btn-primary">
+          Shop Now
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- FEATURED PRODUCTS -->
+  <section class="products" id="products">
+    <div class="container">
+      <div class="products-header">
+        <div>
+          <p class="section-label">Featured Products</p>
+          <h2 class="section-title">Fuel Your Ambition</h2>
+        </div>
+        <button class="btn-outline" id="viewAllBtn" onclick="toggleViewAll()">View All Products</button>
+      </div>
+      <!-- Scroll mode (default) -->
+      <div class="products-scroll-wrapper" id="productsScrollWrapper">
+        <button class="scroll-arrow scroll-left" id="scrollLeft" onclick="scrollProducts(-1)">&#8249;</button>
+        <div class="products-scroll" id="productsScroll">
+          <!-- Products injected by JS -->
+        </div>
+        <button class="scroll-arrow scroll-right" id="scrollRight" onclick="scrollProducts(1)">&#8250;</button>
+      </div>
+      <!-- Grid mode (toggled by View All) -->
+      <div class="products-grid hidden" id="productsGrid">
+        <!-- Products injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats" id="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <span class="stat-number" data-count="50000">50K+</span>
+          <span class="stat-label">Happy Customers</span>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <span class="stat-number">100%</span>
+          <span class="stat-label">Authentic Products</span>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <span class="stat-number">Fast</span>
+          <span class="stat-label">Delivery</span>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <span class="stat-number">24/7</span>
+          <span class="stat-label">Customer Support</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="why-choose" id="why-choose">
+    <!-- Full-bleed background image — replace images/why-choose-athlete.png with your own -->
+    <div class="why-bg">
+      <img src="images/why-choose-athlete.png" alt="Athlete with orange paint effect">
+    </div>
+    <div class="container">
+      <div class="why-content">
+        <p class="section-label">Why Choose Us</p>
+        <h2 class="section-title">Supplements That Build More Than Muscle</h2>
+        <p>We believe in transparency, quality and real results. Every product we provide is tested, trusted and used by us. Because at the end of the day —</p>
+        <span class="hashtag">#WEARETHELIVINGRESULT</span>
+        <a href="#" class="btn-secondary">
+          Learn More
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <p class="section-label">Testimonials</p>
+      <h2 class="section-title">What Our Customers Say</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Best quality supplements at the best price. Results speak for themselves!"</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">R</div>
+            <div>
+              <div class="testimonial-name">Rohit Sharma</div>
+              <div class="testimonial-role">Bodybuilder</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"ISO Plasma is next level. Fast recovery, pure gains. Living Result is my go-to brand."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">K</div>
+            <div>
+              <div class="testimonial-name">Kunal Rawat</div>
+              <div class="testimonial-role">Fitness Athlete</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Affordable and authentic. The Mass Gainer helped me put on 8kg in 3 months. Highly recommend!"</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">A</div>
+            <div>
+              <div class="testimonial-name">Arjun Mehta</div>
+              <div class="testimonial-role">Gym Enthusiast</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER BENEFITS -->
+  <div class="footer-benefits">
+    <div class="container">
+      <div class="benefits-grid">
+        <div class="benefit-item">
+          <div class="benefit-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <div class="benefit-text">
+            <h4>Free Shipping</h4>
+            <p>ON BULK ORDERS</p>
+          </div>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div class="benefit-text">
+            <h4>Secure Payments</h4>
+            <p>100% secure payments</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="brand-safety">
+    <div class="container">
+      <p>"Living Result was built to make fitness supplements more affordable and accessible. We believe honest pricing, practical guidance, and consistency create real results."</p>
+    </div>
+  </div>
+
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <img src="images/logo.png" alt="Living Result" class="logo-img" style="height:80px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div style="display:none; align-items:center; gap:10px;"><div class="logo-icon">LR</div><span>Living Result</span></div>
+        </div>
+        <div class="footer-links">
+          <a href="#">Home</a>
+          <a href="#products">Shop</a>
+          <a href="#why-choose">About</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+      <div class="footer-disclaimer">
+        <p>Disclaimer: Living Result products are dietary supplements intended to support fitness goals when combined with proper diet, training, hydration, and sleep. Results may vary from person to person based on body type, lifestyle, consistency, and genetics. These products are not medicines and are not intended to diagnose, treat, cure, or prevent any disease. Please consult a healthcare professional before use if you have any medical condition, allergies, or are under medication.</p>
+      </div>
+      <div class="footer-copy">
+        &copy; 2026 Living Result. All rights reserved. | #WEARETHELIVINGRESULT
+      </div>
+    </div>
+  </footer>
+
+  <!-- FLOATING WHATSAPP BUTTON -->
+  <a href="https://wa.me/917003714398?text=Hi%20Living%20Result%2C%20I%20have%20a%20query." class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 32 32"><path d="M16.004 0h-.008C7.174 0 0 7.176 0 16.004c0 3.5 1.132 6.738 3.054 9.372L1.054 31.1l5.918-1.956c2.518 1.682 5.522 2.66 8.748 2.66h.008C24.544 31.804 31.72 24.626 31.72 16.004 31.72 7.382 24.544.206 16.004 0zm0 0" fill="currentColor"/><path d="M25.314 22.594c-.396 1.116-1.944 2.04-3.204 2.31-.864.18-1.992.324-5.79-1.244-4.86-2.004-7.986-6.93-8.226-7.254-.234-.318-1.914-2.55-1.914-4.866 0-2.316 1.212-3.45 1.644-3.924.396-.432.93-.594 1.236-.594.15 0 .306.006.438.012.396.018.594.042.858.66.33.774 1.134 2.766 1.236 2.97.102.204.204.474.072.75-.126.282-.234.456-.462.708-.228.252-.444.444-.672.714-.204.234-.432.486-.186.954.246.468 1.098 1.806 2.358 2.928 1.62 1.44 2.982 1.89 3.408 2.1.324.156.714.132.966-.126.318-.33.714-.876 1.116-1.416.288-.384.648-.432 1.008-.288.366.138 2.352 1.11 2.754 1.314.402.204.672.306.77.474.098.168.098.966-.298 2.082z" fill="#0a0a0a"/></svg>
+  </a>
+
+  <!-- PRODUCT MODAL OVERLAY -->
+  <div class="modal-overlay" id="productModalOverlay" onclick="closeProductModal(event)">
+    <div class="modal-content" id="productModalContent">
+      <!-- Modal injected by JS -->
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
