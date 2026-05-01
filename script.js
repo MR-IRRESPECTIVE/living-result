@@ -15,6 +15,7 @@ const products = [
     rating: 5,
     reviews: 214,
     bestSeller: true,
+    category: "common",
     stockLeft: 12,
     description: "Hulk Mass Gainer is designed for extreme muscle growth and quick recovery. Packed with high-quality calories to help you pack on size fast. *DISCLAIMER :Best results with calorie surplus, resistance training and proper routine. Individual weight gain results may vary.",
     ingredients: "Maltodextrin, Whey Protein Concentrate, Cocoa Powder, Artificial Flavors, Sucralose.",
@@ -38,6 +39,7 @@ const products = [
     rating: 4,
     reviews: 156,
     bestSeller: false,
+    category: "unique",
     stockLeft: 8,
     description: "Hydra Mass Gainer provides a balanced ratio of proteins and complex carbs to fuel your hardest workouts and drive muscle synthesis. *DISCLAIMER :Best results with calorie surplus, resistance training and proper routine. Individual weight gain results may vary.",
     ingredients: "Oat Flour, Whey Protein Isolate, Natural Flavors, Stevia.",
@@ -60,6 +62,7 @@ const products = [
     rating: 5,
     reviews: 342,
     bestSeller: true,
+    category: "common",
     stockLeft: 24,
     description: "Premium fast-absorbing whey protein to ignite muscle protein synthesis immediately after your workouts. *DISCLAIMER :Contains dairy ingredients. Not suitable for individuals with lactose sensitivity unless tolerated",
     ingredients: "Whey Protein Isolate, Whey Protein Concentrate, Digestive Enzymes.",
@@ -85,6 +88,7 @@ const products = [
     rating: 5,
     reviews: 89,
     bestSeller: true,
+    category: "unique",
     stockLeft: 5,
     description: "The purest form of protein. Zero carbs, zero fat, 100% pure isolate for serious athletes demanding the best. *DISCLAIMER :Contains dairy ingredients. Not suitable for individuals with lactose sensitivity unless tolerated",
     ingredients: "Hydrolyzed Whey Protein Isolate, Natural and Artificial Flavors.",
@@ -136,18 +140,46 @@ function renderProductCard(product) {
   `;
 }
 
+// ===== STATE FOR PRODUCT CATEGORY =====
+let currentCategory = "unique";
+
+function switchProductCategory(category) {
+  currentCategory = category;
+
+  // Update tabs
+  document.getElementById("tab-unique").classList.remove("active");
+  document.getElementById("tab-common").classList.remove("active");
+  document.getElementById("tab-unique").style.borderBottomColor = "transparent";
+  document.getElementById("tab-unique").style.color = "var(--text-muted)";
+  document.getElementById("tab-common").style.borderBottomColor = "transparent";
+  document.getElementById("tab-common").style.color = "var(--text-muted)";
+
+  const activeTab = document.getElementById(`tab-${category}`);
+  activeTab.classList.add("active");
+  activeTab.style.borderBottomColor = "var(--accent)";
+  activeTab.style.color = "var(--text-primary)";
+
+  // Update descriptions
+  document.getElementById("category-description-unique").style.display = category === "unique" ? "block" : "none";
+  document.getElementById("category-description-common").style.display = category === "common" ? "block" : "none";
+
+  renderProducts();
+}
+
 // ===== RENDER PRODUCTS =====
 function renderProducts() {
+  const filteredProducts = products.filter(p => p.category === currentCategory);
+
   // Scroll view (default)
   const scrollContainer = document.getElementById("productsScroll");
   if (scrollContainer) {
-    scrollContainer.innerHTML = products.map(renderProductCard).join("");
+    scrollContainer.innerHTML = filteredProducts.map(renderProductCard).join("");
   }
 
   // Grid view (View All)
   const gridContainer = document.getElementById("productsGrid");
   if (gridContainer) {
-    gridContainer.innerHTML = products.map(renderProductCard).join("");
+    gridContainer.innerHTML = filteredProducts.map(renderProductCard).join("");
   }
 }
 
@@ -201,6 +233,21 @@ function closeProductModal(e) {
   if (e && e.target.id !== "productModalOverlay" && !e.target.closest('.modal-close')) return;
 
   const modalOverlay = document.getElementById("productModalOverlay");
+  modalOverlay.classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+// ===== PRIVACY POLICY MODAL =====
+function openPrivacyModal(e) {
+  if (e) e.preventDefault();
+  const modalOverlay = document.getElementById("privacyModalOverlay");
+  modalOverlay.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closePrivacyModal(e) {
+  if (e && e.target.id !== "privacyModalOverlay" && !e.target.closest('.modal-close')) return;
+  const modalOverlay = document.getElementById("privacyModalOverlay");
   modalOverlay.classList.remove("active");
   document.body.style.overflow = "";
 }
@@ -261,11 +308,14 @@ function renderModalContent(product) {
           </div>
         </div>
 
-        <div style="margin: 30px 0;">
+        <div style="margin: 30px 0; display: flex; flex-direction: column; gap: 10px;">
           ${flavor.inStock
-      ? `<a href="${whatsappLink}" target="_blank" rel="noopener" class="btn-primary" style="width: 100%; justify-content: center; padding: 18px;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.49l4.625-1.472A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-2.168 0-4.19-.587-5.932-1.61l-.425-.253-2.742.874.87-2.675-.277-.44A9.77 9.77 0 012.182 12c0-5.423 4.395-9.818 9.818-9.818S21.818 6.577 21.818 12s-4.395 9.818-9.818 9.818z"/></svg>
-                Order on WhatsApp
+      ? `<button onclick="openCheckoutModal(${product.id}, ${currentSelectedFlavorIndex})" class="btn-primary" style="width: 100%; justify-content: center; padding: 18px; font-size: 16px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                Secure Checkout
+              </button>
+              <a href="${whatsappLink}" target="_blank" rel="noopener" style="width: 100%; text-align: center; color: var(--text-muted); font-size: 13px; text-decoration: underline; margin-top: 5px;">
+                Or order via WhatsApp
               </a>`
       : `<button class="btn-primary" style="width: 100%; justify-content: center; padding: 18px; background: var(--border); color: var(--text-muted); cursor: not-allowed;">Out of Stock</button>`
     }
@@ -449,6 +499,99 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
+// ===== PROTOTYPE CHECKOUT LOGIC =====
+let pendingOrderAmount = 0;
+
+function openCheckoutModal(productId, flavorIndex) {
+  // Close product modal
+  const productModal = document.getElementById("productModalOverlay");
+  if (productModal) productModal.classList.remove("active");
+
+  const product = products.find(p => p.id === productId);
+  const flavor = product.flavors[flavorIndex];
+  pendingOrderAmount = product.price;
+
+  // Render summary
+  const summaryEl = document.getElementById("checkoutSummary");
+  if (summaryEl) {
+    summaryEl.innerHTML = `
+      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+        <span style="color: var(--text-primary); font-weight: bold;">${product.name}</span>
+        <span style="color: var(--accent); font-weight: bold;">₹${product.price.toLocaleString()}</span>
+      </div>
+      <div style="font-size: 13px; color: var(--text-muted);">Flavor: ${flavor.name}</div>
+      <div style="font-size: 13px; color: var(--text-muted);">Quantity: 1</div>
+      <hr style="border: 0; border-top: 1px solid var(--border); margin: 15px 0;">
+      <div style="display: flex; justify-content: space-between;">
+        <span style="color: var(--text-primary); font-weight: bold;">Total to Pay:</span>
+        <span style="color: #fff; font-weight: bold; font-size: 18px;">₹${product.price.toLocaleString()}</span>
+      </div>
+    `;
+  }
+
+  const overlay = document.getElementById("checkoutModalOverlay");
+  if (overlay) {
+    overlay.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+}
+
+function closeCheckoutModal(e) {
+  if (e && e.target.id !== "checkoutModalOverlay" && !e.target.closest('.modal-close')) return;
+  const overlay = document.getElementById("checkoutModalOverlay");
+  if (overlay) {
+    overlay.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+}
+
+function processCheckout(e) {
+  e.preventDefault();
+  // Close checkout modal
+  const checkoutOverlay = document.getElementById("checkoutModalOverlay");
+  if (checkoutOverlay) checkoutOverlay.classList.remove("active");
+  
+  // Update and show mock payment gateway
+  const mockAmount = document.getElementById("mockPaymentAmount");
+  if (mockAmount) mockAmount.innerText = "₹" + pendingOrderAmount.toLocaleString();
+  
+  const paymentOverlay = document.getElementById("mockPaymentOverlay");
+  if (paymentOverlay) {
+    paymentOverlay.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+}
+
+function simulatePaymentSuccess() {
+  // Close payment modal
+  const paymentOverlay = document.getElementById("mockPaymentOverlay");
+  if (paymentOverlay) paymentOverlay.classList.remove("active");
+  
+  // Show success modal
+  const successOverlay = document.getElementById("successModalOverlay");
+  if (successOverlay) successOverlay.classList.add("active");
+  
+  // Clear cart/form in a real scenario
+  const checkoutForm = document.getElementById("checkoutForm");
+  if (checkoutForm) checkoutForm.reset();
+}
+
+function simulatePaymentFailure() {
+  const paymentOverlay = document.getElementById("mockPaymentOverlay");
+  if (paymentOverlay) paymentOverlay.classList.remove("active");
+  document.body.style.overflow = "";
+  alert("Payment cancelled. You can try again.");
+}
+
+function closeSuccessModal(e) {
+  if (e && e.target.id !== "successModalOverlay" && !e.target.closest('button')) return;
+  const successOverlay = document.getElementById("successModalOverlay");
+  if (successOverlay) {
+    successOverlay.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+}
 
 // ===== INIT =====
 document.addEventListener("DOMContentLoaded", () => {
